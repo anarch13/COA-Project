@@ -29,8 +29,9 @@ void heat3D_parallel(grid &heat, int N, int T) {
             for (int j = 1; j < N-1; j++) {
                 for (int k = 1; k < N-1; k++) {
                     // 3D heat diffusion equation
-                    newheat[i][j][k] = 0.125 * (heat[i+1][j][k] + heat[i-1][j][k] + heat[i][j+1][k] 
-                    + heat[i][j-1][k] + heat[i][j][k+1] + heat[i][j][k-1] - 6 * heat[i][j][k]) + heat[i][j][k];
+                    newheat[i][j][k] = 0.125 * (heat[i+1][j][k] + heat[i-1][j][k] 
+                    + heat[i][j+1][k] + heat[i][j-1][k] + heat[i][j][k+1] 
+                    + heat[i][j][k-1] - 6 * heat[i][j][k]) + heat[i][j][k];
                 }
             }
         }
