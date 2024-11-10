@@ -22,13 +22,12 @@ void initializeheat(grid &heat, int N) {
 void heat3D_parallel(grid &heat, int N, int T) {
     grid newheat = heat;
 
-    // Parallel version: Time step loop
     for (int t = 0; t < T; t++) {
-        #pragma omp parallel for collapse(3) // Parallelize all three dimensions
+        #pragma omp parallel for ordered(3)
         for (int i = 1; i < N-1; i++) {
             for (int j = 1; j < N-1; j++) {
                 for (int k = 1; k < N-1; k++) {
-                    // 3D heat diffusion equation
+                    #pragma omp await depend(i-1,j,k) depend(i,j-1,k) depend (i,j,k-1)
                     newheat[i][j][k] = 0.125 * (heat[i+1][j][k] + heat[i-1][j][k] 
                     + heat[i][j+1][k] + heat[i][j-1][k] + heat[i][j][k+1] 
                     + heat[i][j][k-1] - 6 * heat[i][j][k]) + heat[i][j][k];
