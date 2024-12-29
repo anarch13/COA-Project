@@ -20,7 +20,7 @@ void initializeheat(grid &heat, int N) {
 }
 
 void heat3D_parallel(grid &heat, int N, int T) {
-    grid newheat = heat;
+    grid newheat(N, vector<vector<double>>(N, vector<double>(N)));
 
     for (int t = 0; t < T; t++) {
         #pragma omp parallel for ordered(3)
@@ -34,7 +34,7 @@ void heat3D_parallel(grid &heat, int N, int T) {
                 }
             }
         }
-        heat = newheat;
+        swap(heat, newheat);
     }
 }
 

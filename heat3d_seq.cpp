@@ -19,7 +19,7 @@ void initializeheat(grid &heat, int N) {
 }
 
 void heat3D_sequential(grid &heat, int N, int T) {
-    grid newheat = heat;
+    grid newheat(N, vector<vector<double>>(N, vector<double>(N)));
 
     for (int t = 0; t < T; t++) {
         for (int i = 1; i < N-1; i++) {
@@ -32,7 +32,7 @@ void heat3D_sequential(grid &heat, int N, int T) {
                 }
             }
         }
-        heat = newheat;
+        swap(heat, newheat);
     }
 }
 
