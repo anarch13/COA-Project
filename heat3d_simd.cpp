@@ -62,7 +62,7 @@ int main() {
     grid heat(N, vector<vector<double>>(N, vector<double>(N)));
     initializeheat(heat, N);
 
-    // simd version timing
+    // SIMD version timing
     auto start = Clock::now();
     heat3D_simd(heat, N, T);
     auto end = Clock::now();
