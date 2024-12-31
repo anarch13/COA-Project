@@ -8,7 +8,7 @@ using namespace std;
 using Clock = chrono::high_resolution_clock;
 using grid = vector<vector<vector<double>>>;
 
-void initializeheat(grid &heat, int N) {
+void initialize(grid &heat, int N) {
     for (int i = 0; i < N; i++) {
         for (int j = 0; j < N; j++) {
             for (int k = 0; k < N; k++) {
@@ -60,7 +60,7 @@ int main() {
     cin >> N;
 
     grid heat(N, vector<vector<double>>(N, vector<double>(N)));
-    initializeheat(heat, N);
+    initialize(heat, N);
 
     // SIMD version timing
     auto start = Clock::now();
