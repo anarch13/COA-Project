@@ -67,7 +67,7 @@ int main() {
     heat3D_simd(heat, N, T);
     auto end = Clock::now();
     auto simd_duration = chrono::duration_cast<chrono::milliseconds>(end - start).count();
-    cout << "SIMD Duration: " << simd_duration << " ms" << endl;
+    cout << "SIMD Duration: " << simd_duration / 1000.0 << " s" << endl;
 
     return 0;
 }

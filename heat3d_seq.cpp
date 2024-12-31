@@ -48,7 +48,7 @@ int main() {
     heat3D_sequential(heat, N, T);
     auto end = Clock::now();
     auto seq_duration = chrono::duration_cast<chrono::milliseconds>(end - start).count();
-    cout << "Sequential Duration: " << seq_duration << " ms" << endl;
+    cout << "Sequential Duration: " << seq_duration / 1000.0 << " s" << endl;
 
     return 0;
 }

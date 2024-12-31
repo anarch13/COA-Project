@@ -65,7 +65,7 @@ int main() {
     heat3D_domain(heat, N, T);
     auto end = Clock::now();
     auto domain_duration = chrono::duration_cast<chrono::milliseconds>(end - start).count();
-    cout << "Domain Decomposition Duration: " << domain_duration << " ms" << endl;
+    cout << "Domain Decomposition Duration: " << domain_duration / 1000.0 << " s" << endl;
 
     return 0;
 }

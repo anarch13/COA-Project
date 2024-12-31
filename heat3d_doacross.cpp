@@ -19,15 +19,14 @@ void initialize(grid &heat, int N) {
     heat[N/2][N/2][N/2] = 100.0;
 }
 
-void heat3D_parallel(grid &heat, int N, int T) {
+void heat3D_doacross(grid &heat, int N, int T) {
     grid newheat(N, vector<vector<double>>(N, vector<double>(N)));
 
     for (int t = 0; t < T; t++) {
-        #pragma omp parallel for ordered(3)
+        #pragma omp parallel for collapse(3) schedule(guided)
         for (int i = 1; i < N-1; i++) {
             for (int j = 1; j < N-1; j++) {
                 for (int k = 1; k < N-1; k++) {
-                    #pragma omp await depend(i-1,j,k) depend(i,j-1,k) depend (i,j,k-1)
                     newheat[i][j][k] = 0.125 * (heat[i+1][j][k] + heat[i-1][j][k] 
                     + heat[i][j+1][k] + heat[i][j-1][k] + heat[i][j][k+1] 
                     + heat[i][j][k-1] - 6 * heat[i][j][k]) + heat[i][j][k];
@@ -45,12 +44,12 @@ int main() {
     grid heat(N, vector<vector<double>>(N, vector<double>(N)));
     initialize(heat, N);
 
-    // Parallel version timing
+    // Doacross version timing
     auto start = Clock::now();
-    heat3D_parallel(heat, N, T);
+    heat3D_doacross(heat, N, T);
     auto end = Clock::now();
-    auto par_duration = chrono::duration_cast<chrono::milliseconds>(end - start).count();
-    cout << "Parallel Duration: " << par_duration << " ms" << endl;
+    auto doacross_duration = chrono::duration_cast<chrono::milliseconds>(end - start).count();
+    cout << "Doacross Duration: " << doacross_duration / 1000.0 << " s" << endl;
 
     return 0;
 }
