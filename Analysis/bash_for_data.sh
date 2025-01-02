@@ -10,7 +10,7 @@ g++ -fopenmp heat3d_wave.cpp -o heat3d_wave
 output_file="time.csv"
 
 if [ ! -f "$output_file" ]; then
-    echo "Size(n),Seq(s),Doacross(s),SIMD(s),wave(s)" > "$output_file"
+    echo "Size(N),Seq(s),Doacross(s),SIMD(s),wave(s)" > "$output_file"
 fi
 
 for N in "${N_array[@]}"; do
@@ -21,15 +21,11 @@ for N in "${N_array[@]}"; do
     doacross_time=$(./heat3d_doacross <<< "$N")
     doacross=$(echo "$doacross_time" | awk '{print $3}')
 
-
     simd_time=$(./heat3d_simd <<< "$N")
     simd=$(echo "$simd_time" | awk '{print $3}')
 
-
-
     wave_time=$(./heat3d_wave <<< "$N")
     wave=$(echo "$wave_time" | awk '{print $3}')
-
 
     echo "$N,$seq,$doacross,$simd,$wave" >> "$output_file"
 done
